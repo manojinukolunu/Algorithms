@@ -1,17 +1,27 @@
 package manoj.experiments;
 
 import java.io.File;
-import java.util.regex.Pattern;
+import java.util.HashSet;
 
 import manoj.algs4.Digraph;
 import manoj.algs4.Topological;
 import manoj.stdlib.In;
 
 public class WordNet {
+
+	private String[] synset;
+
+	private HashSet<String> nouns; // HashSet for fastest lookup its O(1)
+
 	public WordNet(String synsets, String hypernyms) {
-		Pattern pattern = Pattern.compile("\n");
+		nouns = new HashSet<String>();
+		// Pattern pattern = Pattern.compile("\n");
 		// pattern.split(hypernyms,0);
-		// String[] synset = synsets.split("\n");
+		synset = synsets.split("\n");
+		for (int i = 0; i < synset.length; i++) {
+			nouns.add(synset[i].split(",")[1]);
+		}
+
 		String[] hypernym = hypernyms.split("\n");
 		Digraph digraph = new Digraph(hypernym.length);
 		System.out.println("Building Digraph with " + hypernym.length + " Vertices");
@@ -31,18 +41,25 @@ public class WordNet {
 	}
 
 	public Iterable<String> nouns() {
-		return null;
+		return nouns;
 	}
 
 	public boolean isNoun(String word) {
-		return false;
+		if (nouns.contains(word))
+			return true;
+		else
+			return false;
 	}
 
 	public int distance(String nounA, String nounB) {
+		if (!(nouns.contains(nounA) && nouns.contains(nounB)))
+			throw new IllegalArgumentException();
 		return -1;
 	}
 
 	public String sap(String nounA, String nounB) {
+		if (!(nouns.contains(nounA) && nouns.contains(nounB)))
+			throw new IllegalArgumentException();
 		return null;
 	}
 
