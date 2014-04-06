@@ -120,6 +120,7 @@ public final class In {
             scanner.useLocale(usLocale);
         }
         catch (IOException ioe) {
+        	ioe.printStackTrace();
             System.err.println("Could not open " + file);
         }
     }
