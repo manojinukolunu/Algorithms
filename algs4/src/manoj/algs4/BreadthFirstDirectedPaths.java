@@ -77,6 +77,12 @@ public class BreadthFirstDirectedPaths {
 		bfs(G, s);
 		return marked;
 	}
+	
+	
+
+	public int[] getDistance() {
+		return distTo;
+	}
 
 	/**
 	 * Computes the shortest path from any one of the source vertices in

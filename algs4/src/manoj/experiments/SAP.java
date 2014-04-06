@@ -19,8 +19,9 @@ public class SAP {
 	// length of shortest ancestral path between v and w ; -1 if no such path
 	public int length(int v, int w) {
 		BreadthFirstDirectedPaths bfds = new BreadthFirstDirectedPaths(G, v);
-		System.out.println(Arrays.toString(bfds.getReachableVerticesfromSourceVertex(G, v)));
-		System.out.println(Arrays.toString(bfds.getReachableVerticesfromSourceVertex(G, w)));
+		BreadthFirstDirectedPaths _bfds = new BreadthFirstDirectedPaths(G, w);
+		System.out.println(Arrays.toString(bfds.getDistance()));
+		System.out.println(Arrays.toString(_bfds.getDistance()));
 		return -1;
 	}
 
