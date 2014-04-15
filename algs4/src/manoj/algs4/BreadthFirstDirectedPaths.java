@@ -68,17 +68,9 @@ public class BreadthFirstDirectedPaths {
 		bfs(G, s);
 	}
 
-	public boolean[] getReachableVerticesfromSourceVertex(Digraph G, int s) {
-		marked = new boolean[G.V()];
-		distTo = new int[G.V()];
-		edgeTo = new int[G.V()];
-		for (int v = 0; v < G.V(); v++)
-			distTo[v] = INFINITY;
-		bfs(G, s);
+	public boolean[] getReachableVerticesfromSourceVertex(int s) {
 		return marked;
 	}
-	
-	
 
 	public int[] getDistance() {
 		return distTo;

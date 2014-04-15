@@ -6,6 +6,8 @@ import java.util.Arrays;
 import manoj.algs4.BreadthFirstDirectedPaths;
 import manoj.algs4.Digraph;
 import manoj.stdlib.In;
+import manoj.stdlib.StdIn;
+import manoj.stdlib.StdOut;
 
 public class SAP {
 
@@ -18,10 +20,12 @@ public class SAP {
 
 	// length of shortest ancestral path between v and w ; -1 if no such path
 	public int length(int v, int w) {
-		BreadthFirstDirectedPaths bfds = new BreadthFirstDirectedPaths(G, v);
-		BreadthFirstDirectedPaths _bfds = new BreadthFirstDirectedPaths(G, w);
-		System.out.println(Arrays.toString(bfds.getDistance()));
-		System.out.println(Arrays.toString(_bfds.getDistance()));
+		BreadthFirstDirectedPaths bfsv = new BreadthFirstDirectedPaths(G, v);
+		BreadthFirstDirectedPaths bfsw = new BreadthFirstDirectedPaths(G, w);
+		
+		System.out.println(Arrays.toString(bfsv.getReachableVerticesfromSourceVertex(v)));
+		
+		System.out.println(Arrays.toString(bfsw.getReachableVerticesfromSourceVertex(w)));
 		return -1;
 	}
 
@@ -46,11 +50,8 @@ public class SAP {
 
 	public static void main(String[] args) {
 		In in = new In(new File("C:/digraph1.txt"));
-		// System.out.println(in.readInt());
 		Digraph G = new Digraph(in);
 		SAP sap = new SAP(G);
-
 		sap.length(3, 11);
 	}
-
 }
