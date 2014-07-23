@@ -16,29 +16,36 @@ public class ProbClassifierParser {
 
 	private static final String dbClassName = "com.mysql.jdbc.Driver";
 
+	private static final String SQLSERVER_CONNECTION = "jdbc:jtds:sqlserver://nam-2k8r2-vm4;user=sa;password=interOP@123;databaseName=platform_esd_app_db_999999";
+
 	private static final String CONNECTION = "jdbc:mysql://127.0.0.1/PROBLEM_CLASSIFIER";
 
-	private static final String insertSQL = "insert into problems (prob_name,url) values ";
+	private static final String insertSQL = "insert into problems (prob_name,prob_url) values ";
+
+	public void sqlConnect() {
+
+	}
 
 	public static void main(String args[]) throws Exception {
+
+		BulkInsertJDBC sqlserver = new BulkInsertJDBC();
+
+		Connection con = sqlserver
+				.getConnection("sa", "interOP@123",
+						"jdbc:jtds:sqlserver://nam-2k8r2-vm4;databaseName=platform_esd_app_db_999999");
+
+		Statement st = con.createStatement();
+		st.execute("select 1");
+
 		StringBuffer buff = new StringBuffer(insertSQL);
-
-		Class.forName(dbClassName);
-
-		Properties p = new Properties();
-		p.put("user", "root");
-		p.put("password", "interOP@123");
-
-		Connection c = DriverManager.getConnection(CONNECTION, p);
-
-		PreparedStatement prepStmt = c
+		PreparedStatement prepStmt = con
 				.prepareStatement("select * from problem_tags");
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next()) {
 			System.out.println("Count 1");
 		}
 
-		File input = new File("/home/manoj/Desktop/probclassifier.html");
+		File input = new File("C:/probclassifier.html");
 		Document doc = Jsoup.parse(input, "UTF-8", "");
 		// Elements tables = doc.getElementsByTag("table");
 		// System.out.println(tables.size());
@@ -62,16 +69,19 @@ public class ProbClassifierParser {
 					buff.append("('" + e.text() + "','" + e.attr("href")
 							+ "'),");
 					String elemText = elem.text();
-					elemText.indexOf(' ');
+					if(elemText.indexOf(" ")!=-1){
+						System.out.println(elemText+ " -- "+elemText.substring(elemText.indexOf(" ")));
+					}
+//					System.out.println(elemText.substring(elemText.indexOf(' ')));
 
-					System.out.println(elem.text() + " --- " + e.attr("href"));
+//					System.out.println(elem.text() + " --- " + e.attr("href"));
 				}
 				// System.out.println(e.nodeName());
 			}
 		}
-		// Statement stmt = c.createStatement();
-		// stmt.executeUpdate(buff.substring(0, buff.lastIndexOf(",")));
-		// System.out.println(buff.substring(0, buff.lastIndexOf(",")));
+//		Statement stmt = con.createStatement();
+//		stmt.executeUpdate(buff.substring(0, buff.lastIndexOf(",")));
+		System.out.println(buff.substring(0, buff.lastIndexOf(",")));
 
 	}
 }
